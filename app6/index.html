@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sexta aplicación</title>
+</head>
+<body>
+    
+<script>
+  
+  let net =  require('net'); //NodeJS
+
+  var cliente =  net.connect({port:8080},function(){
+      console.log('Conexion establecida');
+  });
+
+  cliente.on('data',function(data){
+     document.write(data.toString());   
+  });
+
+  cliente.on('end',function(){
+    console.log('Conexion finalizada');   
+  });
+
+
+
+</script>
+
+</body>
+</html>

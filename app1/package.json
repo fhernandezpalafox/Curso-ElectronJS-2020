@@ -1,0 +1,22 @@
+{
+  "name": "app1",
+  "version": "1.0.0",
+  "description": "App1 usando ElectronJS",
+  "main": "app.js",
+  "scripts": {
+    "dev":"electron app.js",
+    "start":"electron app1.js"
+  },
+  "keywords": [
+    "electron",
+    "nodejs",
+    "html",
+    "css",
+    "js"
+  ],
+  "author": "Felipe Hernandez Palafox",
+  "license": "ISC",
+  "dependencies": {
+    "electron": "^10.1.3"
+  }
+}
