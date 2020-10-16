@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notificaciones</title>
+</head>
+<body>
+    
+    <input type="button" value="Dar clic!!!" id="notify" />
+    
+    <script>
+       //TODO va toda la logica del codigo de JS
+       const notifier  = require('node-notifier');
+       const path  = require('path');
+
+       //ES6
+       document.getElementById("notify").onclick = (event) => {
+         
+        notifier.notify({
+              title: 'Este es un titulo',
+              message: 'Hola grupo de ISSC 311',
+              icon: path.join(__dirname,'informacion.png'),
+              sound:true,
+              wait:true
+            }, function(err,response){
+                 //Realizar algo en la notificacion 
+                 alert("Esto es una alerta");
+            }
+        );
+
+        notifier.on('click',function(notifierobj,options){
+           //
+        });
+
+        notifier.on('timeout',function(notifierobj,options){
+           //
+        });
+
+       }
+
+    </script>
+
+</body>
+</html>
