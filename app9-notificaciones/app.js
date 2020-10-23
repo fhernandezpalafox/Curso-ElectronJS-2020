@@ -10,8 +10,6 @@ app.on('before-quit',()=> {
 });
 
 let win;
-
-
 function createWindow(){
 
     win = new BrowserWindow({

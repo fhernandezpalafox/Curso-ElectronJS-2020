@@ -1,6 +1,0 @@
-felipe,felipe@gmail.com
-Oscar,oscar@gmail.com
-Pedro,pedro.hernandez@gmail.com
-Daniel,daniel.zamudio@gmail.com
-Lalo,lalo.zamudio@gmail.com
-Paola,paola@gmail.com

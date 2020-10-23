@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Octava aplicación</title>
+</head>
+<body>
+
+<input type="button" value="Abrir" onclick="Abrir();" />
+
+<input type="button" value="Abrir Imagen" onclick="AbrirImagen();" />
+
+<input type="button" value="Guardar" onclick="Guardar();" />
+
+<div id="contenido"></div>
+
+<div style="clear: both; height: 10px;"></div>
+
+<textarea id="txtContenido" cols="10" rows="10" style="width: 90%;"></textarea>
+
+<img src="" id="imgFoto" style="width: 100px;" />
+    
+<script>
+
+ const {ipcRenderer} = require('electron');
+
+ function Abrir(){
+    ipcRenderer.send('openFile');
+ }
+
+ function AbrirImagen(){
+     ipcRenderer.send('openFileImg');
+ }
+
+function  Guardar(){
+    ipcRenderer.send('saveFile',document.getElementById("txtContenido").value);
+}
+
+
+ ipcRenderer.on('datosarchivo',(event,args)=>{
+     document.getElementById("contenido").innerHTML = args;
+     document.getElementById("txtContenido").value  =  args;
+ });
+
+ ipcRenderer.on('nuevoarchivo',(event,args)=>{
+     document.getElementById("imgFoto").setAttribute("src",args);
+ });
+
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video</title>
+</head>
+<body>
+    <video autoplay></video>
+    <script>   
+          // In the renderer process.
+        const { desktopCapturer } = require('electron')
+        var fs = require('fs'); 
+        const {dialog} =  require('electron');
+
+
+var recorder; 
+var blobs = [];
+
+function startRecording() { 
+   desktopCapturer.getSources({ types: ['window', 'screen'] }).then(async sources => {
+  for (const source of sources) {
+    console.log(source.name);
+    if (source.name === 'Screen 1') {
+      try {
+        const stream = await navigator.mediaDevices.getUserMedia({
+          audio: false,
+          video: {
+            mandatory: {
+              chromeMediaSource: 'desktop',
+              chromeMediaSourceId: source.id,
+              minWidth: 1280,
+              maxWidth: 1280,
+              minHeight: 720,
+              maxHeight: 720
+            }
+          }
+        })
+        handleStream(stream)
+      } catch (e) {
+        handleError(e)
+      }
+      return
+    }
+  }
+})
+}
+function handleStream (stream) {
+  const video = document.querySelector('video')
+  video.srcObject = stream
+  video.onloadedmetadata = (e) => video.play()
+
+  const options = { mimeType: 'video/webm; codecs=vp9' };
+  recorder = new MediaRecorder(stream,options); 
+    blobs = []; 
+    
+    recorder.ondataavailable = function(event) { 
+     blobs.push(event.data); 
+    }; 
+    recorder.onstop = stopRecording;
+
+    recorder.start(); 
+}
+
+async function stopRecording(e) { 
+   
+    const blob = new Blob(blobs, {
+      type: 'video/webm; codecs=vp9'
+    });
+
+    const buffer = Buffer.from(await blob.arrayBuffer());
+
+
+    fs.writeFile(__dirname+"/videos/"+`vid-${Date.now()}.webm`, Buffer.from(await blob.arrayBuffer()), () => console.log('video saved successfully!')); 
+    
+} 
+
+function handleUserMediaError(e) { 
+    console.error('handleUserMediaError', e); 
+} 
+ 
+
+// Record for 7 seconds and save to disk 
+startRecording(); 
+setTimeout(function() { recorder.stop();  }, 10000); 
+
+function handleError (e) {
+  console.log(e)
+}
+
+    </script>
+
+</body>
+</html>

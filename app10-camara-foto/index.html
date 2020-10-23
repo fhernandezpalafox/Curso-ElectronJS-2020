@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Electron - Camera</title>
+  </head>
+  <body>  
+    <div id="camdemo" style="width: 250px; height: 250px; text-align: center; margin: 0 auto;"></div>
+    <br>
+    <div style="width:100%; text-align: center;" id="phototake">
+        <img src="profile.png" id="photo" style="width:100px; text-align: center; margin: 0 auto;"/>
+    </div>
+      <div>
+          <br>
+            <div style="text-align:center;">
+                <input type="button" id="start" value="Prender/Apagar la Camara"/> <br/><br/>
+                <input type="button" id="takephoto" value="Tomar Foto"/> <br/><br/>
+                <input type="button" id="savefile" value="Guardar Foto"/> <br/><br/>
+            </div>
+      </div>
+      <script>
+            var enabled = false;
+            var WebCamera = require("webcamjs");
+            const {dialog} =  require('electron');
+            var fs = require('fs');
+            const {ipcRenderer} = require('electron');
+
+            WebCamera.set({
+                width: 250,
+                height: 150,
+                image_format: 'jpeg',
+                jpeg_quality: 90,
+                constraints: {
+                    width: { exact: 1280 },
+                    height: { exact: 720 }
+                }
+            });
+
+            document.getElementById("takephoto").addEventListener('click', function(){
+                 
+                    var shutter = new Audio();
+                    shutter.autoplay = false;
+                    shutter.src = navigator.userAgent.match(/Firefox/) ? 'shutter.ogg' : 'shutter.mp3';
+
+            
+                    shutter.play();
+                    WebCamera.snap( function(data_uri) {
+                    document.getElementById('phototake').innerHTML = 
+                            '<img id="photo" width="250px" height="150px" src="'+data_uri+'"/>';
+                            });
+              
+           });
+
+            document.getElementById("start").addEventListener('click', function(){
+        
+
+                if(!enabled){
+                    enabled = true;
+                    WebCamera.attach('#camdemo');
+                    console.log("The camera has been started");
+                }else{
+                    enabled = false;
+                    WebCamera.reset();
+                    console.log("The camera has been disabled");
+                }
+            },false);
+
+            function processBase64Image(dataString) {
+              var matches = dataString.match(/^data:([A-Za-z-+\/]+);base64,(.+)$/),response = {};
+
+              if (matches.length !== 3) {
+                  return new Error('Invalid input string');
+              }
+
+              response.type = matches[1];
+              response.data =  Buffer.from(matches[2], 'base64');
+
+              return response;
+            }
+
+            document.getElementById("savefile").addEventListener('click',function(){
+                if(enabled){
+                    WebCamera.snap(function(data_uri) {
+                        var imageBuffer = processBase64Image(data_uri);
+                        ipcRenderer.send('saveFile',imageBuffer);
+                        
+        			});
+                }else{
+                    console.log("Please enable the camera first to take the snapshot !");
+                }
+            },false);
+      </script>
+  </body>
+</html>
