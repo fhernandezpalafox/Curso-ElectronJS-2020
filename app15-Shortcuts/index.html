@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <meta charset = "UTF-8">
+      <title>Symtem Tray</title>
+      <link rel="stylesheet" href="css/photon.css">
+   </head>
+   
+   <body>
+     
+      <!-- Wrap your entire app inside .window -->
+    <div class="window">
+
+    <!-- .toolbar-header sits at the top of your app -->
+    <header class="toolbar toolbar-header" style="-webkit-app-region: drag">
+        <div style="-webkit-app-region: no-drag">
+            <a class="icon icon-record" style="color:#fc605b; float: left;margin-left: 10px;line-height: 25px;-webkit-app-region: no-drag;font-size: 20px;" id="close-btn"></a>
+            <a class="icon icon-record" style="color:#fdbc40; float: left;margin-left: 10px;line-height: 25px;-webkit-app-region: no-drag;font-size: 20px;" id="min-btn"></a>
+            <a class="icon icon-record" style="color:#34c84a; float: left;margin-left: 10px;line-height: 25px;-webkit-app-region: no-drag;font-size: 20px;" id="max-btn"></a>
+        </div>
+      
+        </header>
+      <!-- Your app's content goes inside .window-content -->
+      <div class="window-content">
+          
+         <p>Press CTRL/CMD + O to open a file. </p>
+         <script type = "text/javascript">
+            const {ipcRenderer, remote} = require('electron')
+            const {globalShortcut} = remote
+            globalShortcut.register('CommandOrControl+O', () => {
+               
+               ipcRenderer.send('openFile');
+
+               ipcRenderer.on('fileData',(event,args)=>{
+                  document.getElementById("contenido").innerHTML  =  args;
+               });
+
+
+            })
+         </script>
+
+         <div id="contenido" style="width: 100%;height: 50%;"></div>
+
+        </div>
+          <!-- FOOTER -->
+          <footer class="toolbar toolbar-footer">
+              <div class="toolbar-actions">
+                 
+              </div>
+          </footer>
+      </div>
+     
+       <!-- Javascript -->
+    <script src="js/btn_actions.js" charset="utf-8"></script>
+   </body>
+</html>
