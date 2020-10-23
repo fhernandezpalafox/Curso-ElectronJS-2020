@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <meta charset = "UTF-8">
+      <title>Webview</title>
+      <link rel="stylesheet" href="css/photon.css">
+   </head>
+   
+   <body>
+     
+      <!-- Wrap your entire app inside .window -->
+    <div class="window">
+
+    <!-- .toolbar-header sits at the top of your app -->
+    <header class="toolbar toolbar-header" style="-webkit-app-region: drag">
+        <div style="-webkit-app-region: no-drag">
+            <a class="icon icon-record" style="color:#fc605b; float: left;margin-left: 10px;line-height: 25px;-webkit-app-region: no-drag; font-size: 20px;" id="close-btn"></a>
+            <a class="icon icon-record" style="color:#fdbc40; float: left;margin-left: 10px;line-height: 25px;-webkit-app-region: no-drag; font-size: 20px;" id="min-btn"></a>
+            <a class="icon icon-record" style="color:#34c84a; float: left;margin-left: 10px;line-height: 25px;-webkit-app-region: no-drag; font-size: 20px;" id="max-btn"></a>
+        </div>
+      
+        </header>
+      <!-- Your app's content goes inside .window-content -->
+      <div class="window-content">
+          
+        <div>
+          <div>
+             <h2>Uso del tag WebView</h2>
+          </div>
+          <webview id="foo" 
+                   src="https://www.github.com/" 
+                   style="display:inline-flex;width: 800px;height: 500px;">
+            <div class = "indicator"></div>
+          </webview>
+       </div>
+       
+       <script type = "text/javascript">
+          // Event handlers for loading events.
+          // Use these to handle loading screens, transitions, etc
+          onload = () => {
+
+
+             const webview = document.getElementById('foo')
+             const indicator = document.querySelector('.indicator')
+ 
+             const loadstart = () => {
+                indicator.innerText = 'loading...'
+             }
+ 
+             const loadstop = () => {
+                indicator.innerText = ''
+             }
+ 
+             webview.addEventListener('did-start-loading', loadstart)
+             webview.addEventListener('did-stop-loading', loadstop)
+          }
+       </script>
+
+        </div>
+          <!-- FOOTER -->
+          <footer class="toolbar toolbar-footer">
+              <div class="toolbar-actions">
+                 
+              </div>
+          </footer>
+      </div>
+     
+       <!-- Javascript -->
+    <script src="js/btn_actions.js" charset="utf-8"></script>
+   </body>
+</html>

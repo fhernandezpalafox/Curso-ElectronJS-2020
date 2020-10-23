@@ -11,3 +11,7 @@
 /app10-camara-foto/node_modules
 /app10-grabar-pantalla/node_modules
 /app11-menu/node_modules
+/app12-PhotonKit/node_modules
+/app13-WebView/node_modules
+/app14-SystemTray/node_modules
+/app15-Shortcuts/node_modules
