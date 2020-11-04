@@ -6,9 +6,6 @@ const {dialog} =  require('electron');
 const fs = require('fs');
 
 
-app.setPath("userData", __dirname + "/grabaciones");
-
-
 app.on('before-quit',()=> {
   console.log("Saliendo...");
 });
