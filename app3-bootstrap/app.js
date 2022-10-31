@@ -20,8 +20,10 @@ function createWindow(){
         title: 'Tercera aplicación',
         center: true,
         maximizable: false,
+        //fullscreen:true,
         webPreferences:{
-            nodeIntegration:true
+            nodeIntegration:true,
+            contextIsolation: false,
         }
     });
 

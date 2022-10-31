@@ -4,3 +4,4 @@ Pedro,pedro.hernandez@gmail.com
 Daniel,daniel.zamudio@gmail.com
 Lalo,lalo.zamudio@gmail.com
 Paola,paola@gmail.com
+Alzati ,Alzati@gmail.com

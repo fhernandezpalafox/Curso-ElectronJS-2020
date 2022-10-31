@@ -21,7 +21,8 @@ function createWindow(){
         center: true,
         maximizable: false,
         webPreferences:{
-            nodeIntegration:true
+            nodeIntegration:true,
+            contextIsolation: false,
         }
     });
 

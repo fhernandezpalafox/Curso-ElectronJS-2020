@@ -4,8 +4,8 @@
   "description": "App2 usando ElectronJS",
   "main": "app.js",
   "scripts": {
-    "dev":"electron app.js",
-    "start":"electron app1.js"
+    "dev": "electron app.js",
+    "start": "electron app1.js"
   },
   "keywords": [
     "electron",
@@ -16,7 +16,7 @@
   ],
   "author": "Felipe Hernandez Palafox",
   "license": "ISC",
-  "dependencies": {
-    "electron": "^10.1.3"
+  "devDependencies": {
+    "electron": "^20.0.3"
   }
 }
